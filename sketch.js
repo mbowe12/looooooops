@@ -33,6 +33,11 @@ let isPlaying = false;
 let bpm = 360;
 let lastStepTime = 0;
 
+let gKeyPressed = false;
+let hKeyPressed = false;
+let bothKeysStartTime = 0;
+const RESET_HOLD_DURATION = 3000; // 3 seconds in milliseconds
+
 //some images by kues1 on Freepik
 function preload() {
   for (let i = 1; i <= 8; i++) {
@@ -60,6 +65,13 @@ function setup() {
   textSize(20);
 }
 
+// function mousePressed() {
+//   if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+//     let fs = fullscreen();
+//     fullscreen(!fs);
+//   }
+// }
+
 function draw() {
   background(0);
   
@@ -67,6 +79,7 @@ function draw() {
     drawDrumMachineUI();
   } else {
     drawGenerativeArt();
+    drawDrumMachineUI();
   }
   
   // Play sequence
@@ -86,6 +99,13 @@ function drawDrumMachineUI() {
   let centerX = width / 2;
   let centerY = height / 2;
   
+  // push();
+  // stroke(0);
+  // strokeWeight(20);
+  // noFill();
+  // circle(width/2, height/2, radius*2);
+  // pop();
+
   for (let i = 0; i < steps; i++) {
     let angle = map(i, 0, steps, 0, TWO_PI) - HALF_PI;
     let x = centerX + cos(angle) * radius;
@@ -124,10 +144,6 @@ function drawDrumMachineUI() {
       text(i + 1, x, y);
     }
   }
-  // // Display instructions
-  // fill(255);
-  // textAlign(LEFT, BOTTOM);
-  // text("Press Q, W, E, R to toggle sounds. SPACE to play/pause. T/Y to change step.", 10, height - 10);
 }
 
 function drawGenerativeArt() {
@@ -382,16 +398,30 @@ function windowResized() {
   redraw();
 }
 
+function clearSequence() {
+  sequence = Array(steps).fill().map(() => Array(4).fill(false));
+}
+
 function keyPressed() {
-  let soundKeys = ['q', 'w', 'e', 'r'];
+  let soundKeys = ['f', 'j', 'v', 'n'];
   if (soundKeys.includes(key.toLowerCase())) {
     let soundIndex = soundKeys.indexOf(key.toLowerCase());
     sequence[currentStep][soundIndex] = !sequence[currentStep][soundIndex];
     sounds[soundIndex].play();
-  } else if (key === 'y') {
-    currentStep = (currentStep + 1) % steps;
-  } else if (key === 't') {
-    currentStep = (currentStep - 1 + steps) % steps;
+  } else if (key === 'h') {
+    hKeyPressed = true;
+    if (gKeyPressed && bothKeysStartTime === 0) {
+      bothKeysStartTime = millis();
+    } else {
+      currentStep = (currentStep + 1) % steps;
+    }
+  } else if (key === 'g') {
+    gKeyPressed = true;
+    if (hKeyPressed && bothKeysStartTime === 0) {
+      bothKeysStartTime = millis();
+    } else {
+      currentStep = (currentStep - 1 + steps) % steps;
+    }
   } else if (key === ' ') {
     isPlaying = !isPlaying;
     if (isPlaying) {
@@ -404,6 +434,25 @@ function keyPressed() {
     }
   }
   redraw(); // Redraw the canvas to update the UI
+}
+
+function keyReleased() {
+  if (key === 'g') {
+    gKeyPressed = false;
+  } else if (key === 'h') {
+    hKeyPressed = false;
+  }
+  
+  if (!gKeyPressed || !hKeyPressed) {
+    if (bothKeysStartTime !== 0) {
+      let pressDuration = millis() - bothKeysStartTime;
+      if (pressDuration >= RESET_HOLD_DURATION) {
+        clearSequence();
+        redraw();
+      }
+      bothKeysStartTime = 0;
+    }
+  }
 }
 
 function playStep() {

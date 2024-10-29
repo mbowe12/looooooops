@@ -1,8 +1,163 @@
-html, body {
+html,
+body {
+  font-family: "Inter", sans-serif;
   margin: 0;
   padding: 0;
+  height: 100%;
 }
 
 canvas {
   display: block;
+}
+
+#ui-container {
+  position: fixed;
+  bottom: 100px;
+  left: 100px;
+  right: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+#top-buttons {
+  position: fixed;
+  bottom: 155px;
+  left: 180px;
+  right: 180px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  text-wrap: nowrap;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+}
+
+.circle-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: none;
+  border: 2px solid;
+  font-size: 24px;
+  cursor: pointer;
+  color: inherit;
+  transition: background-color 0.1s, color 0.1s;
+}
+
+.left-bottom {
+  border-color: #ff0000;
+  color: #ff0000;
+}
+.left-bottom:active,
+.left-bottom.active {
+  background-color: #ff0000;
+  color: black;
+}
+
+.right-bottom {
+  border-color: #00ff00;
+  color: #00ff00;
+}
+.right-bottom:active,
+.right-bottom.active {
+  background-color: #00ff00;
+  color: black;
+}
+
+.left-top {
+  border-color: #0000ff;
+  color: #0000ff;
+}
+.left-top:active,
+.left-top.active {
+  background-color: #0000ff;
+  color: black;
+}
+
+.right-top {
+  border-color: #ffff00;
+  color: #ffff00;
+}
+.right-top:active,
+.right-top.active {
+  background-color: #ffff00;
+  color: black;
+}
+
+.top-left,
+.top-right {
+  width: 100px;
+  border-color: #ffffff;
+  color: #ffffff;
+}
+.top-left:active,
+.top-left.active,
+.top-right:active,
+.top-right.active {
+  background-color: #ffffff;
+  color: black;
+}
+
+#play-pause-btn {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #808080;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+/* Adjust button positions */
+.left-top,
+.right-top {
+  align-self: flex-start;
+}
+
+.left-bottom,
+.right-bottom {
+  align-self: flex-end;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  backdrop-filter: blur(8px);
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 60%;
+  border-radius: 30px;
+  max-width: 600px;
+  text-align: center;
+}
+
+#closeModal {
+  background-color: #4caf50;
+  border-radius: 10px;
+  color: white;
+  padding: 20px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 80%;
+}
+
+#closeModal:hover {
+  opacity: 0.8;
 }

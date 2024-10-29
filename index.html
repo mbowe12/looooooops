@@ -13,6 +13,34 @@
   </head>
 
   <body>
+    <div id="ui-container">
+      <div class="button-group">
+        <button class="circle-btn left-top">F</button>
+        <button class="circle-btn left-bottom">V</button>
+      </div>
+      <div class="button-group">
+        <button class="circle-btn right-top">J</button>
+        <button class="circle-btn right-bottom">N</button>
+      </div>
+    </div>
+    <div id="top-buttons">
+      <button class="circle-btn top-left">← G</button>
+      <button class="circle-btn top-right">H →</button>
+    </div>
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <h2>Welcome to LOOOOPS!</h2>
+        <p>LOOOOPS is an interactive audio-visual experience. Here's how to use it:</p>
+        <ul>
+          <p>Press F, V, J, N to toggle sounds on different steps</p>
+          <p>Press G to move back a step, H to move forward a step</p>
+          <p>Press Spacebar to play/pause the sequence</p>
+          <p>Hold G and H together for 3 seconds to reset the sequence</p>
+        </ul>
+        <button id="closeModal">Start LOOOOPS</button>
+      </div>
+    </div>
     <script src="sketch.js"></script>
+    <script src="app.js"></script>
   </body>
 </html>
